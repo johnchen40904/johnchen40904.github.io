@@ -1,23 +1,108 @@
 <!DOCTYPE html>
 <html>
-<head>
-<style> 
-#rcorners1 {
-  border-radius: 20px;
-  background: cyan;
-  padding: 5px; 
-  width: 60px;
-  height: 30px;  
-}
 
-</style>
-</head>
-<body>
+  <head>
+    <style>
+      * {
+        box-sizing: border-box
+      }
 
-<h1>The border-radius Property</h1>
+      input[type=text],
+      input[type=password] {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 20px 0;
+        display: inline-block;
+        border: none;
+        background: #eee;
+      }
 
-<p id="rcorners1">Rounded Button Test</p>
+      input[type=text]:focus,
+      input[type=password]:focus {
+        background-color: #ccc;
+        outline: none;
+      }
 
+      hr {
+        border: 1px solid #3186df;
+        margin-bottom: 25px;
+        opacity: 0.6;
+      }
 
-</body>
+      button {
+        background-color: #3186ff;
+        color: white;
+        padding: 16px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        opacity: 0.85;
+      }
+
+      button:hover {
+        opacity: 1;
+      }
+
+      .cancelbtn {
+        background-color: #f45356;
+      }
+
+      .cancelbtn,
+      .signupbtn {
+        float: left;
+        width: 50%;
+      }
+
+      .container {
+        padding: 16px;
+        background-color: #f8ffff
+      }
+    </style>
+  </head>
+
+  <body style="background-color: #f8ffff">
+
+    <form style="border:1px solid #f8ffff">
+      <div class="container">
+        <h1>Sign Up Here</h1>
+        <hr>
+
+        <label for="f-name"><b>First Name:</b></label>
+        <input type="text" placeholder="Enter Your First Name:" name="f-name" required>
+
+        <label for="l-name"><b>Last Name:</b></label>
+        <input type="text" placeholder="Enter Your Last Name:" name="l-name" required>
+
+        <hr>
+
+        <label for="email"><b>Email:</b></label>
+        <input type="text" placeholder="Enter Your Email:" name="email" required>
+
+        <label for="pwd"><b>Password:</b></label>
+        <input type="password" placeholder="Enter Your Password:" name="pwd" required>
+
+        <label for="pwd-rep"><b>Confirm Password:</b></label>
+        <input type="password" placeholder="Confirm Your Password:" name="pwd-rep" required>
+
+        <hr>
+
+        <label>
+          <input type="checkbox" name="sus" style="margin-bottom:15px"> I am Turing Complete
+        </label>
+        <label>
+          <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Forget me
+        </label>
+
+        <p>By creating an account you agree to let me <a href="index.html" style="color:dodgerblue">Pass This Course</a>.</p>
+
+        <div>
+          <button type="button" class="cancelbtn">Cancel</button>
+          <button type="submit" class="signupbtn">Sign Up</button>
+        </div>
+      </div>
+    </form>
+
+  </body>
+
 </html>
