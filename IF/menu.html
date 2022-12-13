@@ -1,1 +1,42 @@
+<html>
+<head>
+  <title>Interactive Fiction Game</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+    }
+    .story-text {
+      font-size: 20px;
+      margin: 20px;
+      text-align: left;
+    }
+    .choice-button {
+      font-size: 16px;
+      padding: 10px;
+      margin: 5px;
+      border: none;
+      background-color: #333;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Interactive Fiction Game</h1>
+  <p class="story-text">
+    You find yourself in a dark forest. The only light comes from a faint glow in the distance. Do you go towards the light or stay where you are?
+  </p>
+  <button class="choice-button" onclick="goTowardsLight()">Go towards the light</button>
+  <button class="choice-button" onclick="stayInPlace()">Stay where you are</button>
 
+  <script>
+    function goTowardsLight() {
+      alert("You decide to go towards the light. As you get closer, you realize it's coming from a small cabin. You approach the cabin and knock on the door. No one answers, but the door is unlocked. Do you go inside or leave?");
+    }
+    function stayInPlace() {
+      alert("You decide to stay where you are. After a while, you hear the sound of footsteps approaching. Do you hide or confront whoever it is?");
+    }
+  </script>
+</body>
+</html>
