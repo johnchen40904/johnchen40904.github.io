@@ -2,7 +2,7 @@
 <html>
 
   <head>
-    <title>Button Game</title>
+    <title>Trolley Problems</title>
     <style>
       .game-container {
         width: 800px;
@@ -14,10 +14,11 @@
       }
 
       #rectangle {
-        width: 100px;
-        height: 100px;
+        width: 150px;
+        height: 150px;
         background-image: url('trolley.png');
         background-size: cover;
+        //background-color: red;
         offset: path("M90,153 C275,221 585,334 748,390");
       }
 
@@ -91,8 +92,8 @@
   <body>
     <div class="game-container">
       <div id="rectangle"></div>
-      <button id="left-button">Move Along Curved Path</button>
-      <button id="right-button">Move Straight</button>
+      <button id="left-button">Pull the Lever</button>
+      <button id="right-button">Do Nothing</button>
     </div>
     <div class="timer">10</div>
     <div class="score-counter">0</div>
