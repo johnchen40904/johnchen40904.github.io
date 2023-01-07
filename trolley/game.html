@@ -15,7 +15,8 @@
       #rectangle {
         width: 50px;
         height: 50px;
-        background-color: red;   
+        background-image: url('tolley.png');
+        background-size: cover;
         offset: path("M52,196 C242,242 130,0 479,63");
       }
 
@@ -117,7 +118,7 @@
         setTimeout(function() {
           buttonDisabled = false;
         }, 3000);
-        
+
         rectangle.classList.add("curve-animation");
         let r_reset = setTimeout(function() {
           rectangle.classList.remove("curve-animation");
@@ -135,7 +136,7 @@
         setTimeout(function() {
           buttonDisabled = false;
         }, 3000);
-        
+
         rectangle.classList.add("straight-animation");
         let r_reset = setInterval(function() {
           rectangle.classList.remove("straight-animation");
