@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Button Game</title>
+    <style>
+      .game-container {
+        width: 500px;
+        height: 450px;
+        position: relative;
+        margin: auto;
+      }
+
+      #rectangle {
+        width: 50px;
+        height: 50px;
+        background-color: red;   
+        offset: path("M52,196 C242,242 130,0 479,63");
+      }
+
+      .timer {
+        font-size: 36px;
+        font-weight: bold;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+      }
+
+      .score-counter {
+        font-size: 36px;
+        font-weight: bold;
+        position: absolute;
+        top: 50px;
+        right: 10px;
+      }
+
+      button {
+        font-size: 18px;
+        padding: 10px 20px;
+        margin: 10px;
+      }
+
+      #left-button {
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
+      }
+
+      #right-button {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+      }
+
+      #rectangle.curve-animation {
+        offset-path: path("M52,196 C242,242 130,100 479,163");
+        animation: curve-movement 2.5s;
+      }
+
+      #rectangle.straight-animation {
+        offset-path: path("M52,196 C194,235 345,279 453,312");
+        animation: straight-movement 2.5s;
+      }
+
+      @keyframes curve-movement {
+        0% {
+          offset-distance: 0%;
+        }
+
+        100% {
+          offset-distance: 100%;
+        }
+      }
+
+      @keyframes straight-movement {
+        0% {
+          offset-distance: 0%;
+        }
+
+        100% {
+          offset-distance: 100%;
+        }
+      }
+    </style>
+
+  </head>
+
+  <body>
+    <div class="game-container">
+      <div id="rectangle"></div>
+      <button id="left-button">Move Along Curved Path</button>
+      <button id="right-button">Move Straight</button>
+    </div>
+    <div class="timer">10</div>
+    <div class="score-counter">0</div>
+
+    <script>
+      let rectangle = document.getElementById("rectangle");
+      let leftButton = document.getElementById("left-button");
+      let rightButton = document.getElementById("right-button");
+      let timer = document.querySelector(".timer");
+      let scoreCounter = document.querySelector(".score-counter");
+
+      let score = 0;
+      let timerCount = 10;
+      let buttonDisabled = false;
+
+      let a_score = 1;
+      let b_score = 5;
+
+      leftButton.addEventListener("click", function() {
+        if (buttonDisabled) {
+          return;
+        }
+        buttonDisabled = true;
+        setTimeout(function() {
+          buttonDisabled = false;
+        }, 3000);
+        
+        rectangle.classList.add("curve-animation");
+        let r_reset = setTimeout(function() {
+          rectangle.classList.remove("curve-animation");
+        }, 3000);
+        timerCount = 11;
+        score += a_score;
+        scoreCounter.innerHTML = score;
+      });
+
+      rightButton.addEventListener("click", function() {
+        if (buttonDisabled) {
+          return;
+        }
+        buttonDisabled = true;
+        setTimeout(function() {
+          buttonDisabled = false;
+        }, 3000);
+        
+        rectangle.classList.add("straight-animation");
+        let r_reset = setInterval(function() {
+          rectangle.classList.remove("straight-animation");
+          clearInterval(r_reset);
+        }, 3000);
+        timerCount = 11;
+        score += b_score;
+        scoreCounter.innerHTML = score;
+      });
+
+      let countdown = setInterval(function() {
+        timerCount--;
+        timer.innerHTML = timerCount;
+        if (timerCount <= 0) {
+          clearInterval(countdown);
+          //alert("Time's up!");
+        }
+      }, 1000);
+    </script>
+  </body>
+
+</html>
