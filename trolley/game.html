@@ -82,7 +82,7 @@
         }
 
         #rectangle.curve-animation {
-            offset-path: path("M90,153 C575,341 375,90 757,206");
+            offset-path: path("M90,153 C605,371 315,90 757,206");
             animation: curve-movement 3s;
         }
 
@@ -120,11 +120,11 @@
         <div id="man"></div>
         <div id="stick"></div>
         <div id="rectangle"></div>
-        <button id="left-button">Push the Lever</button>
-        <button id="right-button">Do Nothing</button>
     </div>
     <div class="timer">10</div>
     <div class="score-counter">0</div>
+    <button id="left-button">Push the Lever</button>
+    <button id="right-button">Do Nothing</button>
 
     <script>
         let rectangle = document.getElementById("rectangle");
@@ -156,7 +156,6 @@
                 rectangle.classList.remove("curve-animation");
                 stick.classList.remove("flip");
                 stick.style.transform = "scaleX(1)";
-
             }, 3000);
 
             timerCount = 11;
