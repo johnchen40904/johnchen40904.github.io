@@ -13,6 +13,13 @@
             background-size: cover;
         }
 
+        .textbox {
+            width: 840px;
+            height: 260px;
+            position: relative;
+            margin: auto;
+        }
+
         #rectangle {
             width: 300px;
             height: 300px;
@@ -71,13 +78,13 @@
 
         #left-button {
             position: absolute;
-            left: 10px;
+            left: 30px;
             bottom: 10px;
         }
 
         #right-button {
             position: absolute;
-            right: 10px;
+            right: 30px;
             bottom: 10px;
         }
 
@@ -123,8 +130,13 @@
     </div>
     <div class="timer">10</div>
     <div class="score-counter">0</div>
-    <button id="left-button">Push the Lever</button>
-    <button id="right-button">Do Nothing</button>
+    <div class="textbox">
+        <p id="Question">Q</p>
+        <p id="A">A:</p>
+        <p id="B">B:</p>
+        <button id="left-button">Push the Lever</button>
+        <button id="right-button">Do Nothing</button>
+    </div>
 
     <script>
         let rectangle = document.getElementById("rectangle");
