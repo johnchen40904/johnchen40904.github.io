@@ -6,7 +6,7 @@
     <style>
       .game-container {
         width: 800px;
-        height: 420px;
+        height: 480px;
         position: relative;
         margin: auto;
         background-image: url("rail.png");
@@ -14,11 +14,11 @@
       }
 
       #rectangle {
-        width: 50px;
-        height: 50px;
+        width: 80px;
+        height: 80px;
         background-image: url('trolley.png');
         background-size: cover;
-        offset: path("M52,196 C242,242 130,0 479,63");
+        offset: path("M42,168 C623,318 193,27 765,192");
       }
 
       .timer {
@@ -56,12 +56,12 @@
       }
 
       #rectangle.curve-animation {
-        offset-path: path("M52,196 C242,242 130,100 479,163");
+        offset-path: path("M42,168 C623,318 193,27 765,192");
         animation: curve-movement 2.5s;
       }
 
       #rectangle.straight-animation {
-        offset-path: path("M52,196 C194,235 345,279 453,312");
+        offset-path: path("M42,168 C594,321 216,213 743,366");
         animation: straight-movement 2.5s;
       }
 
