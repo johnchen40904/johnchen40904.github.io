@@ -1,164 +1,199 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
+<head>
     <title>Trolley Problems</title>
     <style>
-      .game-container {
-        width: 800px;
-        height: 540px;
-        position: relative;
-        top:30;
-        margin: auto;
-        background-image: url("rail.png");
-        background-size: cover;
-      }
-
-      #rectangle {
-        width: 200px;
-        height: 200px;
-        background-image: url('trolley.png');
-        background-size: cover;
-        //background-color: red;
-        offset: path("M90,153 C575,341 575,341 748,360");
-      }
-
-      .timer {
-        font-size: 36px;
-        font-weight: bold;
-        position: absolute;
-        top: 10px;
-        right: 10px;
-      }
-
-      .score-counter {
-        font-size: 36px;
-        font-weight: bold;
-        position: absolute;
-        top: 50px;
-        right: 10px;
-      }
-
-      button {
-        font-size: 18px;
-        padding: 10px 20px;
-        margin: 10px;
-      }
-
-      #left-button {
-        position: absolute;
-        left: 10px;
-        bottom: 10px;
-      }
-
-      #right-button {
-        position: absolute;
-        right: 10px;
-        bottom: 10px;
-      }
-
-      #rectangle.curve-animation {
-        offset-path: path("M90,153 C575,341 375,60 757,176");
-        animation: curve-movement 2.5s;
-      }
-
-      #rectangle.straight-animation {
-        offset-path: path("M90,153 C575,341 575,341 748,390");
-        animation: straight-movement 2.5s;
-      }
-
-      @keyframes curve-movement {
-        0% {
-          offset-distance: 0%;
+        .game-container {
+            width: 840px;
+            height: 560px;
+            position: relative;
+            margin: auto;
+            background-image: url("rail.png");
+            background-size: cover;
         }
 
-        100% {
-          offset-distance: 100%;
+        #rectangle {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            left: 30px;
+            top: -30px;
+            background-image: url('trolley.png');
+            background-size: cover;
+            //background-color: red;
+            offset: path("M90,153 C575,341 575,341 748,360");
         }
-      }
 
-      @keyframes straight-movement {
-        0% {
-          offset-distance: 0%;
+        #man {
+            width: 100px;
+            height: 120px;
+            background-image: url('man.png');
+            background-size: cover;
+            //background-color: blue;
+            position: absolute;
+            top: 20px;
+            right: 300px;
         }
 
-        100% {
-          offset-distance: 100%;
+        #stick {
+            width: 40px;
+            height: 70px;
+            background-image: url('stick.png');
+            background-size: cover;
+            //background-color: green;
+            position: absolute;
+            top: 75px;
+            right: 385px;
         }
-      }
+
+        .timer {
+            font-size: 36px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .score-counter {
+            font-size: 36px;
+            font-weight: bold;
+            position: absolute;
+            top: 50px;
+            right: 10px;
+        }
+
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            margin: 10px;
+        }
+
+        #left-button {
+            position: absolute;
+            left: 10px;
+            bottom: 10px;
+        }
+
+        #right-button {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+        }
+
+        #rectangle.curve-animation {
+            offset-path: path("M90,153 C575,341 375,90 757,206");
+            animation: curve-movement 3s;
+        }
+
+        #rectangle.straight-animation {
+            offset-path: path("M90,153 C575,341 575,341 748,400");
+            animation: straight-movement 3s;
+        }
+
+        @keyframes curve-movement {
+            0% {
+                offset-distance: 0%;
+            }
+
+            100% {
+                offset-distance: 100%;
+            }
+        }
+
+        @keyframes straight-movement {
+            0% {
+                offset-distance: 0%;
+            }
+
+            100% {
+                offset-distance: 100%;
+            }
+        }
+
     </style>
 
-  </head>
+</head>
 
-  <body>
+<body>
     <div class="game-container">
-      <div id="rectangle"></div>
-      <button id="left-button">Pull the Lever</button>
-      <button id="right-button">Do Nothing</button>
+        <div id="man"></div>
+        <div id="stick"></div>
+        <div id="rectangle"></div>
+        <button id="left-button">Push the Lever</button>
+        <button id="right-button">Do Nothing</button>
     </div>
     <div class="timer">10</div>
     <div class="score-counter">0</div>
 
     <script>
-      let rectangle = document.getElementById("rectangle");
-      let leftButton = document.getElementById("left-button");
-      let rightButton = document.getElementById("right-button");
-      let timer = document.querySelector(".timer");
-      let scoreCounter = document.querySelector(".score-counter");
+        let rectangle = document.getElementById("rectangle");
+        let leftButton = document.getElementById("left-button");
+        let rightButton = document.getElementById("right-button");
+        let timer = document.querySelector(".timer");
+        let scoreCounter = document.querySelector(".score-counter");
+        let stick = document.getElementById("stick");
 
-      let score = 0;
-      let timerCount = 10;
-      let buttonDisabled = false;
+        let score = 0;
+        let timerCount = 10;
+        let buttonDisabled = false;
 
-      let a_score = 1;
-      let b_score = 5;
+        let a_score = 1;
+        let b_score = 5;
 
-      leftButton.addEventListener("click", function() {
-        if (buttonDisabled) {
-          return;
-        }
-        buttonDisabled = true;
-        setTimeout(function() {
-          buttonDisabled = false;
-        }, 3000);
+        leftButton.addEventListener("click", function() {
+            if (buttonDisabled) {
+                return;
+            }
+            buttonDisabled = true;
+            setTimeout(function() {
+                buttonDisabled = false;
+            }, 3000);
 
-        rectangle.classList.add("curve-animation");
-        let r_reset = setTimeout(function() {
-          rectangle.classList.remove("curve-animation");
-        }, 3000);
-        timerCount = 11;
-        score += a_score;
-        scoreCounter.innerHTML = score;
-      });
+            stick.style.transform = "scaleX(-1)";
+            rectangle.classList.add("curve-animation");
+            let r_reset = setTimeout(function() {
+                rectangle.classList.remove("curve-animation");
+                stick.classList.remove("flip");
+                stick.style.transform = "scaleX(1)";
 
-      rightButton.addEventListener("click", function() {
-        if (buttonDisabled) {
-          return;
-        }
-        buttonDisabled = true;
-        setTimeout(function() {
-          buttonDisabled = false;
-        }, 3000);
+            }, 3000);
 
-        rectangle.classList.add("straight-animation");
-        let r_reset = setInterval(function() {
-          rectangle.classList.remove("straight-animation");
-          clearInterval(r_reset);
-        }, 3000);
-        timerCount = 11;
-        score += b_score;
-        scoreCounter.innerHTML = score;
-      });
+            timerCount = 11;
+            score += a_score;
+            scoreCounter.innerHTML = score;
+        });
 
-      let countdown = setInterval(function() {
-        timerCount--;
-        timer.innerHTML = timerCount;
-        if (timerCount <= 0) {
-          clearInterval(countdown);
-          //alert("Time's up!");
-        }
-      }, 1000);
+        rightButton.addEventListener("click", function() {
+            if (buttonDisabled) {
+                return;
+            }
+            buttonDisabled = true;
+            setTimeout(function() {
+                buttonDisabled = false;
+            }, 3000);
+
+            rectangle.classList.add("straight-animation");
+            let r_reset = setInterval(function() {
+                rectangle.classList.remove("straight-animation");
+                clearInterval(r_reset);
+            }, 3000);
+
+            timerCount = 11;
+            score += b_score;
+            scoreCounter.innerHTML = score;
+        });
+
+        let countdown = setInterval(function() {
+            timerCount--;
+            timer.innerHTML = timerCount;
+            if (timerCount <= 0) {
+                clearInterval(countdown);
+                //alert("Time's up!");
+            }
+        }, 1000);
+
     </script>
-  </body>
+</body>
 
 </html>
