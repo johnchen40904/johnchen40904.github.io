@@ -14,11 +14,11 @@
       }
 
       #rectangle {
-        width: 80px;
-        height: 80px;
+        width: 100px;
+        height: 100px;
         background-image: url('trolley.png');
         background-size: cover;
-        offset: path("M42,168 C623,318 193,27 765,192");
+        offset: path("M80,153 C275,221 585,334 748,390");
       }
 
       .timer {
@@ -56,12 +56,12 @@
       }
 
       #rectangle.curve-animation {
-        offset-path: path("M42,168 C623,318 193,27 765,192");
+        offset-path: path(<"M80,153 C575,341 375,60 757,176");
         animation: curve-movement 2.5s;
       }
 
       #rectangle.straight-animation {
-        offset-path: path("M42,168 C594,321 216,213 743,366");
+        offset-path: path("M80,153 C275,221 585,334 748,390");
         animation: straight-movement 2.5s;
       }
 
