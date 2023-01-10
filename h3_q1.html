@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Vehicle Showroom Management System</title>
+</head>
+
+<body>
+    <div class="top-bar">
+        <button class="home-button">Home</button>
+        <button class="about-us-button">About Us</button>
+        <button class="bikes-button">Bikes</button>
+        <button class="showroom-button">Showroom</button>
+    </div>
+    <div id="content">
+    </div>
+
+    <style>
+        /* Add some basic styling to the top bar and buttons */
+        .top-bar {
+            background-color: #f0f0f0;
+            padding: 10px;
+            display: flex;
+            justify-content: flex-end;
+            /* aligns the items within the flex container to the right */
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            //background-color: #ddd;
+
+        }
+
+        button:hover {
+            background-color: #c00;
+        }
+
+        #content {
+            background-image: url('1.png');
+            /* set the initial background image */
+            background-size: cover;
+            /* scale the background image to cover the entire div */
+            background-repeat: no-repeat;
+            /* don't repeat the background image */
+            width: 100%;
+            /* set the width of the div to be the full width of the page */
+            height: 85vh;
+            /* set the height of the div to be the full height of the viewport */
+        }
+
+    </style>
+
+    <script>
+        // Get all the buttons and content div
+        const homeButton = document.querySelector('.home-button');
+        const aboutUsButton = document.querySelector('.about-us-button');
+        const bikesButton = document.querySelector('.bikes-button');
+        const showroomButton = document.querySelector('.showroom-button');
+        const content = document.querySelector('#content');
+
+        // Add event listeners to the buttons to change the background image
+        homeButton.addEventListener('click', () => {
+            content.style.backgroundImage = "url('1.png')";
+        });
+        aboutUsButton.addEventListener('click', () => {
+            content.style.backgroundImage = "url('2.png')";
+        });
+        bikesButton.addEventListener('click', () => {
+            content.style.backgroundImage = "url('3.png')";
+        });
+        showroomButton.addEventListener('click', () => {
+            content.style.backgroundImage = "url('4.png')";
+        });
+
+    </script>
+</body>
+
+</html>
