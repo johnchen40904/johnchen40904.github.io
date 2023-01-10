@@ -14,21 +14,13 @@
         <label for="currency">Input mask currency in prefix $ (dollar)</label>
     </form>
     <script>
-        // This script is to mask the first input to be 12 digits
-        document.getElementById("phone-number").addEventListener("input", function() {
-            this.value = this.value.replace(/[^0-9]/g, "");
-            if (this.value.length > 12) {
-                this.value = this.value.slice(0, 12);
+        document.getElementById("phone-number").addEventListener("keydown", function(e) {
+            if (this.value.length >= 12 && e.keyCode !== 8) {
+                e.preventDefault();
             }
         });
 
-        // This script is to mask the second input in format $0.00
-        document.getElementById("currency").addEventListener("input", function() {
-            this.value = this.value.replace(/^\$/, "").replace(/[^0-9\.]/g, "");
-            if (this.value.length > 0) {
-                this.value = "$" + this.value;
-            }
-        });
+        document.getElementById("currency").value = "$";
 
     </script>
 </body>
