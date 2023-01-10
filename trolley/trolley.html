@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Trolley Problems</title>
+    <style>
+        .game-container {
+            width: 840px;
+            height: 560px;
+            position: relative;
+            margin: auto;
+            background-image: url("rail.png");
+            background-size: cover;
+        }
+
+        .textbox {
+            width: 840px;
+            height: 260px;
+            position: relative;
+            margin: auto;
+        }
+
+        #rectangle {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            left: 30px;
+            top: -30px;
+            background-image: url('trolley.png');
+            background-size: cover;
+            //background-color: red;
+            offset: path("M90,153 C575,341 575,341 748,360");
+        }
+
+        #man {
+            width: 100px;
+            height: 120px;
+            background-image: url('man.png');
+            background-size: cover;
+            //background-color: blue;
+            position: absolute;
+            top: 20px;
+            right: 300px;
+        }
+
+        #stick {
+            width: 40px;
+            height: 70px;
+            background-image: url('stick.png');
+            background-size: cover;
+            //background-color: green;
+            position: absolute;
+            top: 75px;
+            right: 385px;
+        }
+
+        .timer {
+            font-size: 36px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .score-counter {
+            font-size: 16;
+            //font-weight: bold;
+            position: absolute;
+            bottom: 20px;
+            left: 400px;
+        }
+
+        .kill {
+            font-size: 16px //font-weight: bold;
+                position: absolute;
+            bottom: 20px;
+            left: 400px;
+        }
+
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            margin: 10px;
+        }
+
+        #left-button {
+            position: absolute;
+            left: 30px;
+            bottom: 10px;
+        }
+
+        #right-button {
+            position: absolute;
+            right: 30px;
+            bottom: 10px;
+        }
+
+        #rectangle.curve-animation {
+            offset-path: path("M90,153 C605,371 315,90 757,206");
+            animation: curve-movement 3s;
+        }
+
+        #rectangle.straight-animation {
+            offset-path: path("M90,153 C575,341 575,341 748,400");
+            animation: straight-movement 3s;
+        }
+
+        @keyframes curve-movement {
+            0% {
+                offset-distance: 0%;
+            }
+
+            100% {
+                offset-distance: 100%;
+            }
+        }
+
+        @keyframes straight-movement {
+            0% {
+                offset-distance: 0%;
+            }
+
+            100% {
+                offset-distance: 100%;
+            }
+        }
+
+        #Question {
+            font-family: sans-serif;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <div class="game-container">
+        <div id="man"></div>
+        <div id="stick"></div>
+        <div id="rectangle"></div>
+    </div>
+    <div class="textbox">
+        <h2 id="Question">Q</h2>
+        <button id="left-button">Push the Lever</button>
+        <button id="right-button">Do Nothing</button>
+        <div class="score-counter">0</div>
+        <p class="kill">Kills</p>
+    </div>
+
+
+    <script>
+        let rectangle = document.getElementById("rectangle");
+        let leftButton = document.getElementById("left-button");
+        let rightButton = document.getElementById("right-button");
+        //let timer = document.querySelector(".timer");
+        let scoreCounter = document.querySelector(".score-counter");
+        let stick = document.getElementById("stick");
+        let question = document.getElementById("Question");
+
+        let score = 0;
+        let timerCount = 10;
+        let buttonDisabled = false;
+
+        let level_n = 1;
+        let a_score = 1;
+        let b_score = 5;
+
+        const levels = {
+            1: {
+                a: 1,
+                b: 5,
+                qw: "Oh no! A trolley is heading towards 5 people. You can push the lever to divert it to the other track, killing 1 person instead. What do you do?",
+            },
+            2: {
+                a: 4,
+                b: 5,
+                qw: "Oh no! A trolley is heading towards 5 people. You can push the lever to divert it to the other track, killing 4 people instead. What do you do?",
+
+            },
+            3: {
+                a: 0,
+                b: 5,
+                qw: "Oh no! A trolley is heading towards 5 people. You can push the lever to divert it to the other track, but then your wallet and all the money inside will be destroyed. What do you do?",
+            },
+            4: {
+                a: 1,
+                b: 5,
+                qw: "Oh no! A trolley is heading towards 5 people. You can push the lever to derail it, killing yourself instead. What do you do?",
+            },
+            5: {
+                a: 0,
+                b: 5,
+                qw: "Oh no! A trolley is heading towards 5 people. You can push the lever to divert it to the other track, but then all the hard drives containing your entire life's hard work will be destroyed. What do you do?",
+            },
+            6: {
+                a: 1,
+                b: 1,
+                qw: "Oh no! A trolley is heading towards a rich man. The rich man offers you $500,000 to push the lever, which would divert the trolley and kill someone else. What do you do?",
+            },
+            7: {
+                a: 1,
+                b: 5,
+                qw: "Oh no! A trolley is heading towards 5 cats. You can push the lever to divert it to the other track, running over a dog instead. What do you do?",
+            },
+            8: {
+                a: 1,
+                b: 5,
+                qw: "Oh no! A trolley is heading towards 5 people who are sleeping and won't feel pain. You can push the lever to divert it to the other track, running over someone who is wide awake instead. What do you do?",
+            },
+            9: {
+                a: 1,
+                b: 5,
+                qw: "Oh no! A trolley is heading towards 5 protesters who glued themselves to the track. You can push the lever to divert it to the other track, killing 1 person who accidentally tripped onto the track instead. What do you do?",
+            },
+            10: {
+                a: 5,
+                b: 5,
+                qw: "Oh no! A trolley is heading towards 5 people. The lever just speeds up the trolley, which might make it less painful. What do you do?",
+            },
+            11: {
+                a: 0,
+                b: 5,
+                qw: "Oh no! A trolley is heading towards 5 people. The lever slows down the trolley, but not enough to stop it. Doing so causes them to die slowly with extreme pain and suffer. What do you do?",
+            },
+            12: {
+                a: 5,
+                b: 1,
+                qw: "Oh no! A trolley is heading towards your best friend. You can push the lever to divert it to the other track, killing 5 strangers instead. What do you do?",
+            },
+            13: {
+                a: 2,
+                b: 10,
+                qw: "Oh no! A trolley is heading towards 5 people. You can push the lever to divert it to the other track, killing 1 person instead... or at least, that's what you thought. You forgot your glasses and can't see well. What do you do?",
+            },
+            14: {
+                a: 1,
+                b: 5,
+                qw: "Oh no! A trolley is heading towards 5 elderly people. You can push the lever to divert it to the other track, running over a baby instead. What do you do?",
+            },
+            15: {
+                a: 5,
+                b: 1,
+                qw: "Oh no! A trolley is heading towards yourself. You can push the lever to divert it to the other track, killing 5 identical clones of you. What do you do?",
+            },
+            16: {
+                a: 0,
+                b: 5,
+                qw: "Oh no! A trolley is heading towards 5 people. You can push the lever to divert it to the other track. There's another lever, another group of people tied to the tracks, and another person about to face a trolley problem. What do you do?",
+            },
+            17: {
+                a: 0,
+                b: 0,
+                qw: "Oh no! A trolley is heading towards 3 empty trolleys worth $900,000. You can push the lever to divert it to the other track, hitting 1 empty trolley worth $300,000 instead. What do you do?",
+            },
+            18: {
+                a: 6,
+                b: 6,
+                qw: "Oh no! You're a reincarnated being who will eventually be reincarnated as every person in the classic trolley problem. What do you do?",
+            },
+            19: {
+                a: 0,
+                b: 0,
+                qw: "Nobody is in danger. However, you can push the lever to make the trolley get closer to you, so you can wave at all the people on it.",
+            },
+            20: {
+                a: 0,
+                b: 0,
+                qw: "Nobody is in danger, but you kinda want to prank the trolley driver. What do you do?",
+            },
+            21: {
+                a: 1,
+                b: 1,
+                qw: "Oh no! A trolley is heading towards a citizen with 5000 social credits. You can push the lever to divert it to the other track, running over someone who has only 15 social credits instead. What do you do?",
+            },
+            22: {
+                a: 0,
+                b: 1,
+                qw: "Oh no! A trolley is heading towards your worst enemy. You can push the lever to divert the trolley and save them, or you can do nothing and no one will ever know. What do you do? ",
+            },
+            23: {
+                a: 5,
+                b: 5,
+                qw: "Oh no! A trolley is heading towards 5 people. You can push the lever to divert it to the other track, sending the trolley into the future to kill 5 people 10 years from now. What do you do?",
+            },
+            24: {
+                a: 1,
+                b: 5,
+                qw: "Oh no! A trolley is heading towards 5 people. If you do nothing, it would kill them and the railroad company will be liable to the losses. You can push the lever to divert it to the other track and kill 1 person instead, but the you'll be arrested for murder. What do you do?",
+            },
+            25: {
+                a: 0,
+                b: 0,
+                qw: "You've reached the end of the game!",
+            }
+        };
+
+        function setValuesForLevel(level) {
+            const values = levels[level];
+            a_score = values.a;
+            b_score = values.b;
+            question.innerHTML = values.qw;
+        }
+
+        setValuesForLevel(1);
+
+
+        leftButton.addEventListener("click", function() {
+            if (buttonDisabled) {
+                return;
+            }
+            buttonDisabled = true;
+            setTimeout(function() {
+                buttonDisabled = false;
+            }, 3000);
+            stick.style.transform = "scaleX(-1)";
+            if (level_n == 10 || level_n == 11) {
+                rectangle.classList.add("straight-animation");
+            } else {
+                rectangle.classList.add("curve-animation");
+            }
+            let r_reset = setTimeout(function() {
+                rectangle.classList.remove("straight-animation");
+                rectangle.classList.remove("curve-animation");
+                stick.classList.remove("flip");
+                stick.style.transform = "scaleX(1)";
+                level_n++;
+                setValuesForLevel(level_n);
+            }, 3000);
+            //timerCount = 11;
+            score += a_score;
+            scoreCounter.innerHTML = score;
+        });
+
+        rightButton.addEventListener("click", function() {
+            if (buttonDisabled) {
+                return;
+            }
+            buttonDisabled = true;
+            setTimeout(function() {
+                buttonDisabled = false;
+            }, 3000);
+            rectangle.classList.add("straight-animation");
+            let r_reset = setInterval(function() {
+                rectangle.classList.remove("straight-animation");
+                rectangle.classList.remove("curve-animation");
+                clearInterval(r_reset);
+                level_n++;
+                setValuesForLevel(level_n);
+            }, 3000);
+            //timerCount = 11;
+            score += b_score;
+            scoreCounter.innerHTML = score;
+        });
+
+        /*let countdown = setInterval(function() {
+            timerCount--;
+            timer.innerHTML = timerCount;
+            if (timerCount <= 0) {
+                clearInterval(countdown);
+                //alert("Time's up!");
+
+                //buttonDisabled = True;
+            }
+        }, 1000);*/
+
+    </script>
+</body>
+
+</html>
