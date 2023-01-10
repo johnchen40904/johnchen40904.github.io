@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Input Mask</title>
+</head>
+
+<body>
+    <form>
+        <input type="text" id="phone-number" pattern="[0-9]{12}">
+        <label for="phone-number">Input mask number 12 digits</label>
+        <br>
+        <input type="text" id="currency" pattern="^\$[0-9]*">
+        <label for="currency">Input mask currency in prefix $ (dollar)</label>
+    </form>
+    <script>
+        // This script is to mask the first input to be 12 digits
+        document.getElementById("phone-number").addEventListener("input", function() {
+            this.value = this.value.replace(/[^0-9]/g, "");
+            if (this.value.length > 12) {
+                this.value = this.value.slice(0, 12);
+            }
+        });
+
+        // This script is to mask the second input in format $0.00
+        document.getElementById("currency").addEventListener("input", function() {
+            this.value = this.value.replace(/^\$/, "").replace(/[^0-9\.]/g, "");
+            if (this.value.length > 0) {
+                this.value = "$" + this.value;
+            }
+        });
+
+    </script>
+</body>
+
+</html>
