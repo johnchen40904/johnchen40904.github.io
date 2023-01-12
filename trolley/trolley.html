@@ -20,6 +20,29 @@
             margin: auto;
         }
 
+        .tr-textbox1 {
+            background-color: rgba(255, 255, 255, 0.5);
+            /* semi-transparent white */
+            padding: 20px;
+            transform: rotate(10deg) scale(3.2);
+            position: absolute;
+            right: 70px;
+            top: 170px;
+            font-family: sans-serif;
+        }
+
+        .tr-textbox2 {
+            background-color: rgba(255, 255, 255, 0.5);
+            /* semi-transparent white */
+            padding: 20px;
+            transform: rotate(20deg) scale(3.5);
+            position: absolute;
+            right: 80px;
+            top: 350px;
+            font-family: sans-serif;
+        }
+
+
         #rectangle {
             width: 300px;
             height: 300px;
@@ -71,8 +94,10 @@
         }
 
         .kill {
-            font-size: 16px //font-weight: bold;
-                position: absolute;
+            font-size: 16px;
+            font-family: sans-serif;
+            /*font-weight: bold;*/
+            position: absolute;
             bottom: 20px;
             left: 400px;
         }
@@ -87,12 +112,14 @@
             position: absolute;
             left: 30px;
             bottom: 10px;
+            font-family: sans-serif;
         }
 
         #right-button {
             position: absolute;
             right: 30px;
             bottom: 10px;
+            font-family: sans-serif;
         }
 
         #rectangle.curve-animation {
@@ -137,6 +164,12 @@
     <div class="game-container">
         <div id="man"></div>
         <div id="stick"></div>
+        <div class="tr-textbox1" id="a-t">
+            <h3>Your text here</h3>
+        </div>
+        <div class="tr-textbox2" id="b-t">
+            <h3>Your text here</h3>
+        </div>
         <div id="rectangle"></div>
     </div>
     <div class="textbox">
@@ -165,132 +198,184 @@
         let a_score = 1;
         let b_score = 5;
 
+        let a_t = document.getElementById("a-t");
+        let b_t = document.getElementById("b-t");
+
         const levels = {
             1: {
                 a: 1,
                 b: 5,
                 qw: "Oh no! A trolley is heading towards 5 people. You can push the lever to divert it to the other track, killing 1 person instead. What do you do?",
+                ax: "🧍‍♂️",
+                bx: "🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️",
             },
             2: {
                 a: 4,
                 b: 5,
                 qw: "Oh no! A trolley is heading towards 5 people. You can push the lever to divert it to the other track, killing 4 people instead. What do you do?",
-
+                ax: "🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️",
+                bx: "🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️",
             },
             3: {
                 a: 0,
                 b: 5,
                 qw: "Oh no! A trolley is heading towards 5 people. You can push the lever to divert it to the other track, but then your wallet and all the money inside will be destroyed. What do you do?",
+                ax: "💰",
+                bx: "🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️",
             },
             4: {
                 a: 1,
                 b: 5,
                 qw: "Oh no! A trolley is heading towards 5 people. You can push the lever to derail it, killing yourself instead. What do you do?",
+                ax: "",
+                bx: "🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️",
             },
             5: {
                 a: 0,
                 b: 5,
                 qw: "Oh no! A trolley is heading towards 5 people. You can push the lever to divert it to the other track, but then all the hard drives containing your entire life's hard work will be destroyed. What do you do?",
+                ax: "💿💾",
+                bx: "🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️",
             },
             6: {
                 a: 1,
                 b: 1,
                 qw: "Oh no! A trolley is heading towards a rich man. The rich man offers you $500,000 to push the lever, which would divert the trolley and kill someone else. What do you do?",
+                ax: "🧍‍♂️",
+                bx: "🕴",
             },
             7: {
                 a: 1,
                 b: 5,
                 qw: "Oh no! A trolley is heading towards 5 cats. You can push the lever to divert it to the other track, running over a dog instead. What do you do?",
+                ax: "🐕",
+                bx: "🐈🐈🐈🐈🐈",
             },
             8: {
                 a: 1,
                 b: 5,
                 qw: "Oh no! A trolley is heading towards 5 people who are sleeping and won't feel pain. You can push the lever to divert it to the other track, running over someone who is wide awake instead. What do you do?",
+                ax: "🧍‍♂️",
+                bx: "💤🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️",
             },
             9: {
                 a: 1,
                 b: 5,
                 qw: "Oh no! A trolley is heading towards 5 protesters who glued themselves to the track. You can push the lever to divert it to the other track, killing 1 person who accidentally tripped onto the track instead. What do you do?",
+                ax: "🏃‍♂️",
+                bx: "🤸‍♂️🤸‍♂️🤸‍♂️🤸‍♂️🤸‍♂️",
             },
             10: {
                 a: 5,
                 b: 5,
                 qw: "Oh no! A trolley is heading towards 5 people. The lever just speeds up the trolley, which might make it less painful. What do you do?",
+                ax: "",
+                bx: "🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️",
             },
             11: {
-                a: 0,
+                a: 5,
                 b: 5,
                 qw: "Oh no! A trolley is heading towards 5 people. The lever slows down the trolley, but not enough to stop it. Doing so causes them to die slowly with extreme pain and suffer. What do you do?",
+                ax: "",
+                bx: "🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️",
             },
             12: {
                 a: 5,
                 b: 1,
                 qw: "Oh no! A trolley is heading towards your best friend. You can push the lever to divert it to the other track, killing 5 strangers instead. What do you do?",
+                ax: "🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️",
+                bx: "⛹️‍♂️",
             },
             13: {
                 a: 2,
                 b: 10,
                 qw: "Oh no! A trolley is heading towards 5 people. You can push the lever to divert it to the other track, killing 1 person instead... or at least, that's what you thought. You forgot your glasses and can't see well. What do you do?",
+                ax: "🧍‍♂️",
+                bx: "🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️",
             },
             14: {
                 a: 1,
                 b: 5,
                 qw: "Oh no! A trolley is heading towards 5 elderly people. You can push the lever to divert it to the other track, running over a baby instead. What do you do?",
+                ax: "👶",
+                bx: "👴👴👴👴👴",
             },
             15: {
                 a: 5,
                 b: 1,
                 qw: "Oh no! A trolley is heading towards yourself. You can push the lever to divert it to the other track, killing 5 identical clones of you. What do you do?",
+                ax: "😮😮😮😮😮",
+                bx: "😮",
             },
             16: {
                 a: 0,
                 b: 5,
                 qw: "Oh no! A trolley is heading towards 5 people. You can push the lever to divert it to the other track. There's another lever, another group of people tied to the tracks, and another person about to face a trolley problem. What do you do?",
+                ax: "♾",
+                bx: "🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️",
             },
             17: {
                 a: 0,
                 b: 0,
                 qw: "Oh no! A trolley is heading towards 3 empty trolleys worth $900,000. You can push the lever to divert it to the other track, hitting 1 empty trolley worth $300,000 instead. What do you do?",
+                ax: "🚃",
+                bx: "🚃🚃🚃",
             },
             18: {
                 a: 6,
                 b: 6,
                 qw: "Oh no! You're a reincarnated being who will eventually be reincarnated as every person in the classic trolley problem. What do you do?",
+                ax: "🧍‍♂️",
+                bx: "🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️",
             },
             19: {
                 a: 0,
                 b: 0,
                 qw: "Nobody is in danger. However, you can push the lever to make the trolley get closer to you, so you can wave at all the people on it.",
+                ax: "🙋‍♂️",
+                bx: "",
             },
             20: {
                 a: 0,
                 b: 0,
                 qw: "Nobody is in danger, but you kinda want to prank the trolley driver. What do you do?",
+                ax: "😜",
+                bx: "",
             },
             21: {
                 a: 1,
                 b: 1,
                 qw: "Oh no! A trolley is heading towards a citizen with 5000 social credits. You can push the lever to divert it to the other track, running over someone who has only 15 social credits instead. What do you do?",
+                ax: "🐒",
+                bx: "🕴",
             },
             22: {
                 a: 0,
                 b: 1,
                 qw: "Oh no! A trolley is heading towards your worst enemy. You can push the lever to divert the trolley and save them, or you can do nothing and no one will ever know. What do you do? ",
+                ax: "",
+                bx: "🧎‍♂️",
             },
             23: {
                 a: 5,
                 b: 5,
                 qw: "Oh no! A trolley is heading towards 5 people. You can push the lever to divert it to the other track, sending the trolley into the future to kill 5 people 10 years from now. What do you do?",
+                ax: "⚡⏰🕰🌪",
+                bx: "🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️",
             },
             24: {
                 a: 1,
                 b: 5,
-                qw: "Oh no! A trolley is heading towards 5 people. If you do nothing, it would kill them and the railroad company will be liable to the losses. You can push the lever to divert it to the other track and kill 1 person instead, but the you'll be arrested for murder. What do you do?",
+                qw: "Oh no! A trolley is heading towards 5 people. If you do nothing, it would kill them and the railroad company will be liable to the losses. You can push the lever to divert it to the other track and kill 1 person instead, but then you'll be arrested for murder. What do you do?",
+                ax: "🧍‍♂️",
+                bx: "🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️",
             },
             25: {
                 a: 0,
                 b: 0,
-                qw: "You've reached the end of the game!",
+                qw: "You've reached the end of the game! Enjoy your mastery in decision making... or the suffering you rolled down the tracks. Why not both.",
+                ax: "🤚🍅💦",
+                bx: "ﾔﾒﾅｻｲ",
             }
         };
 
@@ -299,6 +384,8 @@
             a_score = values.a;
             b_score = values.b;
             question.innerHTML = values.qw;
+            a_t.innerHTML = values.ax;
+            b_t.innerHTML = values.bx;
         }
 
         setValuesForLevel(1);
